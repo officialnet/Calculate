@@ -258,11 +258,11 @@
       if (employmentType === 'selfEmployed') {
         document.getElementById('housingLabel').style.display = 'block';
         document.getElementById('housingAllowance').style.display = 'block';
-        document.getElementById('otherAllowancesLabel').innerText = "البدلات الأخرى (باستثناء بدل السكن):";
+        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات  (باستثناء بدل السكن):";
       } else {
         document.getElementById('housingLabel').style.display = 'none';
         document.getElementById('housingAllowance').style.display = 'none';
-        document.getElementById('otherAllowancesLabel').innerText = "البدلات الأخرى:";
+        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات:";
         document.getElementById('housingAllowance').value = ""; // reset housing allowance for civil
       }
       calculateSalary();
