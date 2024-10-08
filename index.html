@@ -34,25 +34,25 @@
     }
     .form-control {
       margin-bottom: 20px;
-      max-width: 150px; /* تقليل عرض حقول الإدخال */
+      max-width: 150px;
     }
     .results, .diff-section {
-      margin-top: 30px; /* تقليل المسافات بين الأقسام */
+      margin-top: 30px;
     }
     .results h3, .diff-section h3 {
       background-color: #007bff;
       color: #fff;
       padding: 10px;
       border-radius: 5px;
-      font-size: 1.1em; /* تقليل حجم الخط */
+      font-size: 1.1em;
       font-weight: bold;
     }
     .table th {
       background-color: #e9ecef;
     }
     .table td {
-      vertical-align: middle; /* توسيط النص عموديًا */
-      padding: 8px; /* تقليل ارتفاع الصفوف */
+      vertical-align: middle;
+      padding: 8px;
     }
     .notes {
       font-size: 0.9em;
@@ -79,7 +79,10 @@
     .input-group label {
       margin-bottom: 0;
       margin-right: 10px;
-      width: 120px; /* زيادة عرض التسمية */
+      width: auto;
+    }
+    .input-group .form-control {
+      margin-left: 10px;
     }
     /* تمييز الراتب الصافي */
     .net-salary-row {
@@ -138,8 +141,8 @@
           <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات<br>(باستثناء بدل السكن)</label>
           <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات">
         </div>
-        <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
       </div>
+      <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
     </div>
 
     <!-- نتائج الراتب الحالي -->
@@ -261,10 +264,12 @@
       if (employmentType === 'selfEmployed') {
         document.getElementById('housingGroup').style.display = 'flex';
         document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات<br>(باستثناء بدل السكن)";
+        document.querySelector('.notes').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       } else {
         document.getElementById('housingGroup').style.display = 'none';
         document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات";
-        document.getElementById('housingAllowance').value = ""; // إعادة تعيين بدل السكن
+        document.getElementById('housingAllowance').value = "";
+        document.querySelector('.notes').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       }
       calculateSalary();
     }
