@@ -255,8 +255,8 @@
         document.getElementById('allowancesNote').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       } else {
         document.getElementById('housingGroup').style.display = 'none';
+        document.getElementById('housingAllowance').value = ""; // إعادة تعيين بدل السكن
         document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات";
-        document.getElementById('housingAllowance').value = "";
         document.getElementById('allowancesNote').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       }
       calculateSalary();
