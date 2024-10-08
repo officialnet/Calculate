@@ -148,7 +148,7 @@
           <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات">
         </div>
       </div>
-      <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+      <p class="notes" id="allowancesNote">(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
     </div>
 
     <!-- نتائج الراتب الحالي -->
@@ -209,9 +209,9 @@
       </table>
     </div>
 
-    <!-- الفروقات في الراتب قبل وبعد التحول -->
+    <!-- الفروقات بين الراتب قبل وبعد التحول -->
     <div class="diff-section">
-      <h3>الفروقات في الراتب قبل وبعد التحول</h3>
+      <h3>الفروقات بين الراتب قبل وبعد التحول</h3>
       <table class="table table-bordered">
         <tbody>
           <tr>
@@ -252,12 +252,12 @@
       if (employmentType === 'selfEmployed') {
         document.getElementById('housingGroup').style.display = 'flex';
         document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات<br>(باستثناء بدل السكن)";
-        document.querySelector('.notes').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
+        document.getElementById('allowancesNote').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       } else {
         document.getElementById('housingGroup').style.display = 'none';
         document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات";
         document.getElementById('housingAllowance').value = "";
-        document.querySelector('.notes').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
+        document.getElementById('allowancesNote').innerText = "(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)";
       }
       calculateSalary();
     }
