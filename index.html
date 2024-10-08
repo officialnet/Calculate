@@ -45,10 +45,14 @@
       padding: 10px;
       border-radius: 5px;
       font-size: 1.1em; /* تقليل حجم الخط */
-      font-weight: bold; /* استخدام بولد بدلاً من تكبير الخط */
+      font-weight: bold;
     }
     .table th {
       background-color: #e9ecef;
+    }
+    .table td {
+      vertical-align: middle; /* توسيط النص عموديًا */
+      padding: 8px; /* تقليل ارتفاع الصفوف */
     }
     .notes {
       font-size: 0.9em;
@@ -65,6 +69,8 @@
     .form-group {
       margin-bottom: 15px;
       margin-right: 20px;
+      display: flex;
+      align-items: center;
     }
     .input-group {
       display: flex;
@@ -73,6 +79,23 @@
     .input-group label {
       margin-bottom: 0;
       margin-right: 10px;
+      width: 120px; /* زيادة عرض التسمية */
+    }
+    /* تمييز الراتب الصافي */
+    .net-salary-row {
+      background-color: #d1ecf1;
+      font-weight: bold;
+    }
+    /* تمييز خصم التقاعد */
+    .pension-deduction-row {
+      color: #dc3545;
+      font-weight: bold;
+    }
+    /* تصميم فني لنسبة الخصم */
+    .pension-percentage {
+      font-size: 0.9em;
+      color: #dc3545;
+      margin-left: 5px;
     }
   </style>
 </head>
@@ -112,10 +135,10 @@
 
       <div class="form-group">
         <div class="input-group">
-          <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات</label>
+          <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات<br>(باستثناء بدل السكن)</label>
           <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات">
         </div>
-        <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+        <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
       </div>
     </div>
 
@@ -132,19 +155,19 @@
         <tbody>
           <tr>
             <td>الراتب الأساسي</td>
-            <td><span id="displayBaseSalary">0</span> ريال</td>
+            <td><span id="displayBaseSalary">0.00</span> ريال</td>
           </tr>
           <tr>
             <td>الراتب الإجمالي</td>
-            <td><span id="totalSalary">0</span> ريال</td>
+            <td><span id="totalSalary">0.00</span> ريال</td>
           </tr>
-          <tr>
-            <td>خصم التقاعد</td>
-            <td><span id="pensionDeduction">0</span> ريال</td>
+          <tr class="pension-deduction-row">
+            <td>خصم التقاعد<span class="pension-percentage" id="pensionPercentage"></span></td>
+            <td>-<span id="pensionDeduction">0.00</span> ريال</td>
           </tr>
-          <tr>
+          <tr class="net-salary-row">
             <td>الراتب الصافي</td>
-            <td><span id="netSalary">0</span> ريال</td>
+            <td><span id="netSalary">0.00</span> ريال</td>
           </tr>
         </tbody>
       </table>
@@ -163,27 +186,27 @@
         <tbody>
           <tr>
             <td>الراتب الأساسي</td>
-            <td><span id="newBaseSalary">0</span> ريال</td>
+            <td><span id="newBaseSalary">0.00</span> ريال</td>
           </tr>
           <tr>
             <td>بدل السكن (25%)</td>
-            <td><span id="newHousingAllowance">0</span> ريال</td>
+            <td><span id="newHousingAllowance">0.00</span> ريال</td>
           </tr>
           <tr>
             <td>بدل النقل (10%)</td>
-            <td><span id="newTransportAllowance">0</span> ريال</td>
+            <td><span id="newTransportAllowance">0.00</span> ريال</td>
           </tr>
           <tr>
             <td>الراتب الإجمالي</td>
-            <td><span id="newTotalSalary">0</span> ريال</td>
+            <td><span id="newTotalSalary">0.00</span> ريال</td>
           </tr>
-          <tr>
-            <td>خصم التقاعد</td>
-            <td><span id="newPensionDeduction">0</span> ريال</td>
+          <tr class="pension-deduction-row">
+            <td>خصم التقاعد<span class="pension-percentage" id="newPensionPercentage"></span></td>
+            <td>-<span id="newPensionDeduction">0.00</span> ريال</td>
           </tr>
-          <tr>
+          <tr class="net-salary-row">
             <td>الراتب الصافي</td>
-            <td><span id="newNetSalary">0</span> ريال</td>
+            <td><span id="newNetSalary">0.00</span> ريال</td>
           </tr>
         </tbody>
       </table>
@@ -202,11 +225,11 @@
         <tbody>
           <tr>
             <td>الفرق في الراتب الأساسي</td>
-            <td><span id="salaryDifference">0</span> ريال</td>
+            <td><span id="salaryDifference">0.00</span> ريال</td>
           </tr>
           <tr>
             <td>الفرق في الراتب الصافي</td>
-            <td><span id="netSalaryDifference">0</span> ريال</td>
+            <td><span id="netSalaryDifference">0.00</span> ريال</td>
           </tr>
         </tbody>
       </table>
@@ -236,11 +259,11 @@
     function updateFields() {
       let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
       if (employmentType === 'selfEmployed') {
-        document.getElementById('housingGroup').style.display = 'block';
-        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات (باستثناء بدل السكن)";
+        document.getElementById('housingGroup').style.display = 'flex';
+        document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات<br>(باستثناء بدل السكن)";
       } else {
         document.getElementById('housingGroup').style.display = 'none';
-        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات";
+        document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات";
         document.getElementById('housingAllowance').value = ""; // إعادة تعيين بدل السكن
       }
       calculateSalary();
@@ -262,8 +285,10 @@
       // حساب خصم التقاعد
       if (employmentType === 'civil') {
         pensionDeduction = baseSalary * 0.09;
+        document.getElementById('pensionPercentage').innerText = " (9%)";
       } else if (employmentType === 'selfEmployed') {
         pensionDeduction = (baseSalary + housingAllowance) * 0.0975;
+        document.getElementById('pensionPercentage').innerText = " (9.75%)";
       }
       document.getElementById('pensionDeduction').innerText = formatNumber(pensionDeduction);
 
@@ -292,6 +317,9 @@
       document.getElementById('newTotalSalary').innerText = formatNumber(newTotalSalary);
       document.getElementById('newPensionDeduction').innerText = formatNumber(newPensionDeduction);
       document.getElementById('newNetSalary').innerText = formatNumber(newNetSalary);
+
+      // عرض نسبة خصم التقاعد الجديدة
+      document.getElementById('newPensionPercentage').innerText = " (9.75%)";
 
       // حساب الفروقات
       let salaryDifference = newBaseSalary - baseSalary;
