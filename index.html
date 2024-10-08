@@ -4,137 +4,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>حاسبة رواتب التحول إلى شركة الصحة القابضة</title>
+  <!-- إضافة Bootstrap لتحسين التصميم والاستجابة -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 20px;
+      font-family: 'Cairo', sans-serif;
+      background-color: #f7f9fc;
       color: #333;
       text-align: right;
       direction: rtl;
     }
     .container {
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 800px;
+      margin: 30px auto;
       background-color: #fff;
-      padding: 30px;
+      padding: 40px;
       border-radius: 15px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
     h2 {
-      color: #1f4e79;
-      margin-bottom: 20px;
-      font-size: 1.8em; /* تقليل حجم العنوان */
+      color: #007bff;
+      margin-bottom: 30px;
       text-align: center;
     }
     label {
-      font-size: 1.2em;
-      color: #333;
-      margin-bottom: 10px;
-      display: block;
-    }
-    input[type="number"], select {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
       font-size: 1.1em;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      background-color: #f9f9f9;
-      transition: border-color 0.3s ease;
-      text-align: center;
+      margin-bottom: 5px;
     }
-    input:focus, select:focus {
-      border-color: #1f4e79;
-      outline: none;
-    }
-    .notes {
-      font-size: 0.85em;
-      color: #666;
-      margin-top: -8px;
-      margin-bottom: 10px;
-    }
-    .results {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #eef5ff;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    .results h3 {
-      color: #1f4e79;
-      font-size: 1.3em; /* تقليل حجم العنوان الفرعي */
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    .results table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 10px 0;
-    }
-    .results table th, .results table td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: right;
-    }
-    .results table th {
-      background-color: #f4f4f4;
-      font-weight: bold;
-    }
-    .results table td {
-      background-color: #fff;
-      font-size: 1.1em;
-    }
-    .results span {
-      font-weight: bold;
-      color: #333;
-    }
-    .diff-section {
-      margin-top: 30px;
-      padding: 20px;
-      border-top: 2px solid #ddd;
-      background-color: #fdfdff;
-      border-radius: 10px;
-    }
-    .diff-section h3 {
-      color: #1f4e79;
-      font-size: 1.2em; /* تقليل حجم العنوان الفرعي */
-      text-align: center;
-    }
-    .form-group {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .form-control {
       margin-bottom: 20px;
     }
-    .form-group label {
-      width: 40%;
-      font-size: 1.1em;
+    .results, .diff-section {
+      margin-top: 40px;
     }
-    .radio-group {
-      display: flex;
-      justify-content: flex-start;
-      gap: 20px;
+    .results h3, .diff-section h3 {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
     }
-    input[type="radio"] {
-      margin-right: 5px;
+    .table th {
+      background-color: #e9ecef;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .notes {
+      font-size: 0.9em;
+      color: #6c757d;
     }
-    table th, table td {
-      padding: 12px;
-      border: 1px solid #ddd;
-      text-align: right;
-    }
-    table th {
-      background-color: #f4f4f4;
-    }
-    table td {
-      background-color: #fff;
+    .radio-group label {
+      margin-right: 20px;
     }
   </style>
 </head>
@@ -146,97 +63,127 @@
     <div class="form-group">
       <label>نوع العقد الوظيفي:</label>
       <div class="radio-group">
-        <label><input type="radio" name="employmentType" value="civil" checked> الخدمة المدنية</label>
-        <label><input type="radio" name="employmentType" value="selfEmployed"> التشغيل الذاتي</label>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="civil" name="employmentType" value="civil" class="custom-control-input" checked>
+          <label class="custom-control-label" for="civil">الخدمة المدنية</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="selfEmployed" name="employmentType" value="selfEmployed" class="custom-control-input">
+          <label class="custom-control-label" for="selfEmployed">التشغيل الذاتي</label>
+        </div>
       </div>
     </div>
 
-    <label for="baseSalary">الراتب الأساسي:</label>
-    <input type="number" id="baseSalary" placeholder="أدخل الراتب الأساسي">
+    <div class="form-group">
+      <label for="baseSalary">الراتب الأساسي:</label>
+      <input type="number" id="baseSalary" class="form-control" placeholder="أدخل الراتب الأساسي">
+    </div>
 
-    <label id="housingLabel" for="housingAllowance" style="display: none;">بدل السكن:</label>
-    <input type="number" id="housingAllowance" placeholder="أدخل بدل السكن" style="display: none;">
+    <div class="form-group" id="housingGroup" style="display: none;">
+      <label for="housingAllowance">بدل السكن:</label>
+      <input type="number" id="housingAllowance" class="form-control" placeholder="أدخل بدل السكن">
+    </div>
 
-    <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات:</label>
-    <input type="number" id="otherAllowances" placeholder="أدخل إجمالي البدلات التي تستحقها">
-    <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+    <div class="form-group">
+      <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات:</label>
+      <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات التي تستحقها">
+      <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+    </div>
 
+    <!-- نتائج الراتب الحالي -->
     <div class="results">
       <h3>الراتب الحالي:</h3>
-      <table>
-        <tr>
-          <th>البند</th>
-          <th>المبلغ</th>
-        </tr>
-        <tr>
-          <td>الراتب الإجمالي</td>
-          <td><span id="totalSalary">0</span></td>
-        </tr>
-        <tr>
-          <td>خصم التقاعد</td>
-          <td><span id="pensionDeduction">0</span></td>
-        </tr>
-        <tr>
-          <td>الراتب الصافي</td>
-          <td><span id="netSalary">0</span></td>
-        </tr>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>المبلغ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>الراتب الإجمالي</td>
+            <td><span id="totalSalary">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>خصم التقاعد</td>
+            <td><span id="pensionDeduction">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>الراتب الصافي</td>
+            <td><span id="netSalary">0</span> ريال</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
+    <!-- نتائج الراتب بعد التحول -->
     <div class="results">
       <h3>الراتب بعد التحول لشركة الصحة القابضة:</h3>
-      <table>
-        <tr>
-          <th>البند</th>
-          <th>المبلغ</th>
-        </tr>
-        <tr>
-          <td>الراتب الأساسي</td>
-          <td><span id="newBaseSalary">0</span></td>
-        </tr>
-        <tr>
-          <td>بدل السكن (25%)</td>
-          <td><span id="newHousingAllowance">0</span></td>
-        </tr>
-        <tr>
-          <td>بدل النقل (10%)</td>
-          <td><span id="newTransportAllowance">0</span></td>
-        </tr>
-        <tr>
-          <td>الراتب الإجمالي</td>
-          <td><span id="newTotalSalary">0</span></td>
-        </tr>
-        <tr>
-          <td>خصم التقاعد</td>
-          <td><span id="newPensionDeduction">0</span></td>
-        </tr>
-        <tr>
-          <td>الراتب الصافي</td>
-          <td><span id="newNetSalary">0</span></td>
-        </tr>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>المبلغ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>الراتب الأساسي</td>
+            <td><span id="newBaseSalary">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>بدل السكن (25%)</td>
+            <td><span id="newHousingAllowance">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>بدل النقل (10%)</td>
+            <td><span id="newTransportAllowance">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>الراتب الإجمالي</td>
+            <td><span id="newTotalSalary">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>خصم التقاعد</td>
+            <td><span id="newPensionDeduction">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>الراتب الصافي</td>
+            <td><span id="newNetSalary">0</span> ريال</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
+    <!-- الفروقات بين الراتب قبل وبعد التحول -->
     <div class="diff-section">
       <h3>الفروقات بين الراتب قبل وبعد التحول:</h3>
-      <table>
-        <tr>
-          <th>البند</th>
-          <th>المبلغ</th>
-        </tr>
-        <tr>
-          <td>الفرق في الراتب الأساسي</td>
-          <td><span id="salaryDifference">0</span></td>
-        </tr>
-        <tr>
-          <td>الفرق في الراتب الصافي</td>
-          <td><span id="netSalaryDifference">0</span></td>
-        </tr>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>البند</th>
+            <th>المبلغ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>الفرق في الراتب الأساسي</td>
+            <td><span id="salaryDifference">0</span> ريال</td>
+          </tr>
+          <tr>
+            <td>الفرق في الراتب الصافي</td>
+            <td><span id="netSalaryDifference">0</span> ريال</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
   </div>
 
+  <!-- إضافة Bootstrap و jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     let baseSalary = 0;
     let housingAllowance = 0;
@@ -256,12 +203,10 @@
     function updateFields() {
       let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
       if (employmentType === 'selfEmployed') {
-        document.getElementById('housingLabel').style.display = 'block';
-        document.getElementById('housingAllowance').style.display = 'block';
-        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات  (باستثناء بدل السكن):";
+        document.getElementById('housingGroup').style.display = 'block';
+        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات (باستثناء بدل السكن):";
       } else {
-        document.getElementById('housingLabel').style.display = 'none';
-        document.getElementById('housingAllowance').style.display = 'none';
+        document.getElementById('housingGroup').style.display = 'none';
         document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات:";
         document.getElementById('housingAllowance').value = ""; // reset housing allowance for civil
       }
@@ -320,7 +265,7 @@
     }
 
     function formatNumber(number) {
-      return number.toLocaleString('en-US', { maximumFractionDigits: 2 });
+      return number.toLocaleString('ar-EG', { maximumFractionDigits: 2 });
     }
 
     updateFields();
