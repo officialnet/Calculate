@@ -239,8 +239,16 @@
     let pensionDeduction = 0;
     let netSalary = 0;
 
-    document.querySelectorAll('input[name="employmentType"]').forEach(radio => {
-      radio.addEventListener('change', updateFields);
+    // تغيير حدث الاستماع إلى 'click' على الأزرار
+    document.querySelectorAll('.btn-group-toggle .btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // تحديث حالة المدخلات يدوياً
+        document.querySelectorAll('input[name="employmentType"]').forEach(input => {
+          input.checked = false;
+        });
+        this.querySelector('input[name="employmentType"]').checked = true;
+        updateFields();
+      });
     });
 
     document.querySelectorAll('input[type="number"]').forEach(input => {
