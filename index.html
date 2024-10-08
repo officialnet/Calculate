@@ -27,7 +27,7 @@
       margin-bottom: 30px;
       text-align: center;
       font-weight: bold;
-      font-size: 1.5em; /* تصغير حجم الخط */
+      font-size: 1.3em; /* تصغير حجم الخط */
     }
     label {
       font-size: 1.1em;
@@ -45,24 +45,24 @@
       color: #fff;
       padding: 10px;
       border-radius: 5px;
-      font-size: 1.1em;
+      font-size: 1em; /* تصغير حجم الخط */
       font-weight: bold;
-      text-align: center; /* توسيط عناوين الجداول */
+      text-align: center;
     }
     .table {
-      margin-bottom: 0; /* إزالة المسافة السفلية بين الجداول */
+      margin-bottom: 0;
     }
     .table td {
       vertical-align: middle;
       padding: 8px;
-      border-top: none; /* إزالة الحدود العلوية للخلايا */
+      border-top: none;
     }
     .notes {
       font-size: 0.9em;
       color: #6c757d;
     }
-    .radio-group label {
-      margin-right: 20px;
+    .btn-group-toggle .btn {
+      margin-right: 5px;
     }
     .form-row {
       display: flex;
@@ -93,6 +93,10 @@
       background-color: #d1ecf1;
       font-weight: bold;
     }
+    /* تمييز الراتب الإجمالي */
+    .total-salary-row {
+      font-weight: bold;
+    }
     /* تمييز خصم التقاعد */
     .pension-deduction-row {
       color: #dc3545;
@@ -113,15 +117,13 @@
 
     <div class="form-group">
       <label>نوع العقد الوظيفي</label>
-      <div class="radio-group">
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="civil" name="employmentType" value="civil" class="custom-control-input" checked>
-          <label class="custom-control-label" for="civil">الخدمة المدنية</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="selfEmployed" name="employmentType" value="selfEmployed" class="custom-control-input">
-          <label class="custom-control-label" for="selfEmployed">التشغيل الذاتي</label>
-        </div>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-outline-primary active">
+          <input type="radio" name="employmentType" id="civil" value="civil" autocomplete="off" checked> الخدمة المدنية
+        </label>
+        <label class="btn btn-outline-primary">
+          <input type="radio" name="employmentType" id="selfEmployed" value="selfEmployed" autocomplete="off"> التشغيل الذاتي
+        </label>
       </div>
     </div>
 
@@ -158,7 +160,7 @@
             <td>الراتب الأساسي</td>
             <td><span id="displayBaseSalary">0.00</span> ريال</td>
           </tr>
-          <tr>
+          <tr class="total-salary-row">
             <td>الراتب الإجمالي</td>
             <td><span id="totalSalary">0.00</span> ريال</td>
           </tr>
@@ -191,7 +193,7 @@
             <td>بدل النقل (10%)</td>
             <td><span id="newTransportAllowance">0.00</span> ريال</td>
           </tr>
-          <tr>
+          <tr class="total-salary-row">
             <td>الراتب الإجمالي</td>
             <td><span id="newTotalSalary">0.00</span> ريال</td>
           </tr>
