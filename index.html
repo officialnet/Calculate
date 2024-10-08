@@ -26,6 +26,7 @@
       color: #007bff;
       margin-bottom: 30px;
       text-align: center;
+      font-weight: bold;
     }
     label {
       font-size: 1.1em;
@@ -33,15 +34,18 @@
     }
     .form-control {
       margin-bottom: 20px;
+      max-width: 150px; /* تقليل عرض حقول الإدخال */
     }
     .results, .diff-section {
-      margin-top: 40px;
+      margin-top: 30px; /* تقليل المسافات بين الأقسام */
     }
     .results h3, .diff-section h3 {
       background-color: #007bff;
       color: #fff;
       padding: 10px;
       border-radius: 5px;
+      font-size: 1.1em; /* تقليل حجم الخط */
+      font-weight: bold; /* استخدام بولد بدلاً من تكبير الخط */
     }
     .table th {
       background-color: #e9ecef;
@@ -53,6 +57,23 @@
     .radio-group label {
       margin-right: 20px;
     }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      margin-right: 20px;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+    .input-group label {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
@@ -61,7 +82,7 @@
     <h2>حاسبة رواتب التحول إلى شركة الصحة القابضة</h2>
 
     <div class="form-group">
-      <label>نوع العقد الوظيفي:</label>
+      <label>نوع العقد الوظيفي</label>
       <div class="radio-group">
         <div class="custom-control custom-radio custom-control-inline">
           <input type="radio" id="civil" name="employmentType" value="civil" class="custom-control-input" checked>
@@ -74,25 +95,33 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="baseSalary">الراتب الأساسي:</label>
-      <input type="number" id="baseSalary" class="form-control" placeholder="أدخل الراتب الأساسي">
-    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <div class="input-group">
+          <label for="baseSalary">الراتب الأساسي</label>
+          <input type="number" id="baseSalary" class="form-control" placeholder="أدخل الراتب الأساسي">
+        </div>
+      </div>
 
-    <div class="form-group" id="housingGroup" style="display: none;">
-      <label for="housingAllowance">بدل السكن:</label>
-      <input type="number" id="housingAllowance" class="form-control" placeholder="أدخل بدل السكن">
-    </div>
+      <div class="form-group" id="housingGroup" style="display: none;">
+        <div class="input-group">
+          <label for="housingAllowance">بدل السكن</label>
+          <input type="number" id="housingAllowance" class="form-control" placeholder="أدخل بدل السكن">
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات:</label>
-      <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات التي تستحقها">
-      <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+      <div class="form-group">
+        <div class="input-group">
+          <label id="otherAllowancesLabel" for="otherAllowances">إجمالي البدلات</label>
+          <input type="number" id="otherAllowances" class="form-control" placeholder="أدخل إجمالي البدلات">
+        </div>
+        <p class="notes">(جميع البدلات التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر، إشراف، تدريب ...)</p>
+      </div>
     </div>
 
     <!-- نتائج الراتب الحالي -->
     <div class="results">
-      <h3>الراتب الحالي:</h3>
+      <h3>الراتب الحالي</h3>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -101,6 +130,10 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>الراتب الأساسي</td>
+            <td><span id="displayBaseSalary">0</span> ريال</td>
+          </tr>
           <tr>
             <td>الراتب الإجمالي</td>
             <td><span id="totalSalary">0</span> ريال</td>
@@ -119,7 +152,7 @@
 
     <!-- نتائج الراتب بعد التحول -->
     <div class="results">
-      <h3>الراتب بعد التحول لشركة الصحة القابضة:</h3>
+      <h3>الراتب بعد التحول لشركة الصحة القابضة</h3>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -158,7 +191,7 @@
 
     <!-- الفروقات بين الراتب قبل وبعد التحول -->
     <div class="diff-section">
-      <h3>الفروقات بين الراتب قبل وبعد التحول:</h3>
+      <h3>الفروقات بين الراتب قبل وبعد التحول</h3>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -204,11 +237,11 @@
       let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
       if (employmentType === 'selfEmployed') {
         document.getElementById('housingGroup').style.display = 'block';
-        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات (باستثناء بدل السكن):";
+        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات (باستثناء بدل السكن)";
       } else {
         document.getElementById('housingGroup').style.display = 'none';
-        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات:";
-        document.getElementById('housingAllowance').value = ""; // reset housing allowance for civil
+        document.getElementById('otherAllowancesLabel').innerText = "إجمالي البدلات";
+        document.getElementById('housingAllowance').value = ""; // إعادة تعيين بدل السكن
       }
       calculateSalary();
     }
@@ -222,6 +255,9 @@
       // حساب الراتب الإجمالي
       totalSalary = baseSalary + housingAllowance + otherAllowances;
       document.getElementById('totalSalary').innerText = formatNumber(totalSalary);
+
+      // عرض الراتب الأساسي
+      document.getElementById('displayBaseSalary').innerText = formatNumber(baseSalary);
 
       // حساب خصم التقاعد
       if (employmentType === 'civil') {
@@ -265,7 +301,7 @@
     }
 
     function formatNumber(number) {
-      return number.toLocaleString('ar-EG', { maximumFractionDigits: 2 });
+      return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     updateFields();
