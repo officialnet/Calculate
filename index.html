@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>حاسبة رواتب التحول إلى شركة الصحة القابضة</title>
-  <!-- إضافة Tailwind CSS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حاسبة تقديرية للرواتب – التحول إلى شركة الصحة القابضة</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- إضافة خط 'Cairo' من Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-  <!-- إضافة أيقونات من Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Cairo', sans-serif;
@@ -17,317 +18,221 @@
       color: #111827;
       direction: rtl;
     }
+
     .container {
-      max-width: 800px;
-      margin: 50px auto;
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 24px;
       background-color: #ffffff;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     }
+
     h2 {
-      color: #2563eb;
-      margin-bottom: 30px;
+      color: #1d4ed8;
+      font-weight: 700;
       text-align: center;
-      font-weight: 600;
-      font-size: 2em;
+      margin-bottom: 24px;
+      font-size: 1.6rem;
     }
-    label {
-      font-size: 1.1em;
-      margin-bottom: 5px;
+
+    @media (min-width: 768px) {
+      h2 {
+        font-size: 2rem;
+      }
     }
-    .form-control {
-      margin-bottom: 20px;
-    }
-    .results h3, .diff-section h3 {
-      background-color: #2563eb;
-      color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 1.2em;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
+
     .table td {
       padding: 12px;
       border-bottom: 1px solid #e5e7eb;
+      font-size: 0.95rem;
     }
-    .table tr:last-child td {
-      border-bottom: none;
+
+    @media (max-width: 640px) {
+      .table td {
+        padding: 8px;
+        font-size: 0.85rem;
+      }
     }
-    .notes {
-      font-size: 0.9em;
-      color: #6b7280;
+
+    .total-row {
+      font-weight: 600;
     }
-    .net-salary-row {
+
+    .net-row {
       background-color: #ecfdf5;
-      font-weight: 600;
+      font-weight: 700;
     }
-    .total-salary-row {
-      font-weight: 600;
-    }
-    .pension-deduction-row {
+
+    .deduction-row {
       color: #b91c1c;
       font-weight: 600;
     }
-    .pension-percentage {
-      font-size: 0.9em;
-      color: #b91c1c;
-      margin-left: 5px;
-    }
-    .btn {
-      @apply px-4 py-2 rounded-lg text-white font-semibold;
-    }
-    .btn-primary {
-      background-color: #2563eb;
-    }
-    .btn-primary:hover {
-      background-color: #1d4ed8;
-    }
-    /* تصميم مخصص لأزرار التبديل */
-    .toggle-group input[type="radio"] {
+
+    .toggle-group input {
       display: none;
     }
+
     .toggle-group label {
       cursor: pointer;
-      padding: 10px 20px;
-      border: 2px solid #2563eb;
+      padding: 10px;
+      border: 2px solid #1d4ed8;
+      text-align: center;
+      flex: 1;
       border-radius: 8px;
-      margin-right: -2px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: 0.3s;
     }
-    .toggle-group label:first-child {
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-    }
-    .toggle-group label:last-child {
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-    }
-    .toggle-group input[type="radio"]:checked + label {
-      background-color: #2563eb;
-      color: #fff;
-    }
-    /* تأثيرات Hover على الجدول */
-    .table tr:hover {
-      background-color: #f9fafb;
+
+    .toggle-group input:checked + label {
+      background-color: #1d4ed8;
+      color: #ffffff;
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h2><i class="fas fa-calculator"></i> حاسبة الرواتب</h2>
+<div class="container">
 
-    <div class="mb-6">
-      <label class="block text-lg font-medium mb-2">نوع العقد الوظيفي</label>
-      <div class="toggle-group flex">
-        <input type="radio" name="employmentType" id="civil" value="civil" checked>
-        <label for="civil" class="flex-1 text-center">الخدمة المدنية</label>
+  <h2>حاسبة تقديرية للرواتب</h2>
 
-        <input type="radio" name="employmentType" id="selfEmployed" value="selfEmployed">
-        <label for="selfEmployed" class="flex-1 text-center">التشغيل الذاتي</label>
-      </div>
+  <!-- نوع العقد -->
+  <div class="mb-6">
+    <label class="block mb-2 font-semibold">نوع العقد الوظيفي</label>
+    <div class="toggle-group flex gap-2">
+      <input type="radio" id="civil" name="employmentType" value="civil" checked>
+      <label for="civil">الخدمة المدنية</label>
+
+      <input type="radio" id="self" name="employmentType" value="self">
+      <label for="self">التشغيل الذاتي</label>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label for="baseSalary" class="block text-lg font-medium mb-2">الراتب الأساسي</label>
-        <input type="number" id="baseSalary" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل الراتب الأساسي">
-      </div>
-
-      <div id="housingGroup" style="display: none;">
-        <label for="housingAllowance" class="block text-lg font-medium mb-2">بدل السكن</label>
-        <input type="number" id="housingAllowance" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل بدل السكن">
-      </div>
-
-      <div>
-        <label id="otherAllowancesLabel" for="otherAllowances" class="block text-lg font-medium mb-2">إجمالي البدلات (باستثناء بدل السكن)</label>
-        <input type="number" id="otherAllowances" class="form-control w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل إجمالي البدلات">
-      </div>
-    </div>
-    <p class="notes mt-2" id="allowancesNote">(جميع البدلات الشهرية التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر ...)</p>
-
-    <!-- نتائج الراتب الحالي -->
-    <div class="results mt-10">
-      <h3>الراتب الحالي</h3>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>الراتب الأساسي</td>
-            <td><span id="displayBaseSalary">0.00</span> ريال</td>
-          </tr>
-          <tr class="total-salary-row">
-            <td>الراتب الإجمالي</td>
-            <td><span id="totalSalary">0.00</span> ريال</td>
-          </tr>
-          <tr class="pension-deduction-row">
-            <td>خصم التقاعد<span class="pension-percentage" id="pensionPercentage"></span></td>
-            <td>-<span id="pensionDeduction">0.00</span> ريال</td>
-          </tr>
-          <tr class="net-salary-row">
-            <td>الراتب الصافي</td>
-            <td><span id="netSalary">0.00</span> ريال</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- نتائج الراتب بعد التحول -->
-    <div class="results mt-10">
-      <h3>الراتب بعد التحول لشركة الصحة القابضة</h3>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>الراتب الأساسي</td>
-            <td><span id="newBaseSalary">0.00</span> ريال</td>
-          </tr>
-          <tr>
-            <td>بدل السكن (25%)</td>
-            <td><span id="newHousingAllowance">0.00</span> ريال</td>
-          </tr>
-          <tr>
-            <td>بدل النقل (10%)</td>
-            <td><span id="newTransportAllowance">0.00</span> ريال</td>
-          </tr>
-          <tr class="total-salary-row">
-            <td>الراتب الإجمالي</td>
-            <td><span id="newTotalSalary">0.00</span> ريال</td>
-          </tr>
-          <tr class="pension-deduction-row">
-            <td>خصم التقاعد<span class="pension-percentage" id="newPensionPercentage"></span></td>
-            <td>-<span id="newPensionDeduction">0.00</span> ريال</td>
-          </tr>
-          <tr class="net-salary-row">
-            <td>الراتب الصافي</td>
-            <td><span id="newNetSalary">0.00</span> ريال</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- الفروقات بين الراتب قبل وبعد التحول -->
-    <div class="diff-section mt-10">
-      <h3>الفروقات بين الراتب قبل وبعد التحول</h3>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>الفرق في الراتب الأساسي</td>
-            <td><span id="salaryDifference">0.00</span> ريال</td>
-          </tr>
-          <tr>
-            <td>الفرق في الراتب الصافي</td>
-            <td><span id="netSalaryDifference">0.00</span> ريال</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 
-  <!-- إضافة JavaScript -->
-  <script>
-    let baseSalary = 0;
-    let housingAllowance = 0;
-    let otherAllowances = 0;
-    let totalSalary = 0;
-    let pensionDeduction = 0;
-    let netSalary = 0;
+  <!-- المدخلات -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block mb-1">الراتب الأساسي</label>
+      <input id="baseSalary" type="number" class="w-full p-2 border rounded-lg">
+    </div>
 
-    document.querySelectorAll('input[name="employmentType"]').forEach(input => {
-      input.addEventListener('change', updateFields);
-    });
+    <div id="housingGroup" class="hidden">
+      <label class="block mb-1">بدل السكن</label>
+      <input id="housingAllowance" type="number" class="w-full p-2 border rounded-lg">
+    </div>
 
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-      input.addEventListener('input', calculateSalary);
-    });
+    <div>
+      <label class="block mb-1">إجمالي البدلات</label>
+      <input id="otherAllowances" type="number" class="w-full p-2 border rounded-lg">
+    </div>
+  </div>
 
-    function updateFields() {
-      let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
-      if (employmentType === 'selfEmployed') {
-        document.getElementById('housingGroup').style.display = 'block';
-        document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات (باستثناء بدل السكن)";
-        document.getElementById('allowancesNote').innerText = "(جميع البدلات الشهرية التي يستلمها الموظف: بدل نقل، تفرغ، ندرة، خطر ...)";
-      } else {
-        document.getElementById('housingGroup').style.display = 'none';
-        document.getElementById('housingAllowance').value = ""; // إعادة تعيين بدل السكن
-        document.getElementById('otherAllowancesLabel').innerHTML = "إجمالي البدلات";
-        document.getElementById('allowancesNote').innerText = "(جميع البدلات الشهرية التي يستلمها الموظف: بدل نقل، سكن، تفرغ، ندرة، خطر ...)";
-      }
-      calculateSalary();
-    }
+  <!-- الراتب الحالي -->
+  <div class="mt-8">
+    <h3 class="font-semibold mb-2">الراتب الحالي</h3>
+    <table class="table w-full">
+      <tr><td>الراتب الأساسي</td><td><span id="displayBase">0.00</span> ريال</td></tr>
+      <tr class="total-row"><td>الراتب الإجمالي</td><td><span id="totalSalary">0.00</span> ريال</td></tr>
+      <tr class="deduction-row"><td>خصم التقاعد <span id="pensionRate"></span></td><td>-<span id="pension">0.00</span> ريال</td></tr>
+      <tr class="net-row"><td>الراتب الصافي</td><td><span id="netSalary">0.00</span> ريال</td></tr>
+    </table>
+  </div>
 
-    function calculateSalary() {
-      baseSalary = parseFloat(document.getElementById('baseSalary').value) || 0;
-      housingAllowance = parseFloat(document.getElementById('housingAllowance').value) || 0;
-      otherAllowances = parseFloat(document.getElementById('otherAllowances').value) || 0;
-      let employmentType = document.querySelector('input[name="employmentType"]:checked').value;
+  <!-- بعد التحول -->
+  <div class="mt-8">
+    <h3 class="font-semibold mb-2">بعد التحول إلى شركة الصحة القابضة</h3>
+    <table class="table w-full">
+      <tr><td>الراتب الأساسي</td><td><span id="newBase">0.00</span> ريال</td></tr>
+      <tr><td>بدل سكن (25%)</td><td><span id="newHousing">0.00</span> ريال</td></tr>
+      <tr><td>بدل نقل (10%)</td><td><span id="newTransport">0.00</span> ريال</td></tr>
+      <tr class="total-row"><td>الراتب الإجمالي</td><td><span id="newTotal">0.00</span> ريال</td></tr>
+      <tr class="deduction-row"><td>خصم التقاعد (9.75%)</td><td>-<span id="newPension">0.00</span> ريال</td></tr>
+      <tr class="net-row"><td>الراتب الصافي</td><td><span id="newNet">0.00</span> ريال</td></tr>
+    </table>
+  </div>
 
-      // حساب الراتب الإجمالي
-      totalSalary = baseSalary + housingAllowance + otherAllowances;
-      document.getElementById('totalSalary').innerText = formatNumber(totalSalary);
+  <!-- الفروقات -->
+  <div class="mt-8">
+    <h3 class="font-semibold mb-2">الفروقات</h3>
+    <table class="table w-full">
+      <tr><td>فرق الراتب الأساسي</td><td><span id="diffBase">0.00</span> ريال</td></tr>
+      <tr><td>فرق الراتب الصافي</td><td><span id="diffNet">0.00</span> ريال</td></tr>
+    </table>
+  </div>
 
-      // عرض الراتب الأساسي
-      document.getElementById('displayBaseSalary').innerText = formatNumber(baseSalary);
+  <!-- منهجية -->
+  <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+    <strong>منهجية الحساب:</strong>
+    <ul class="list-disc pr-5 mt-2 space-y-1">
+      <li>تم ضم جميع البدلات الحالية وتحويلها إلى بدل سكن (25%) وبدل نقل (10%).</li>
+      <li>يشترط ألا يقل الراتب الأساسي أو الإجمالي بعد التحول عن الراتب الفعلي الحالي.</li>
+      <li>خصم التقاعد يتحول من 9% إلى 9.75%.</li>
+    </ul>
+  </div>
 
-      // حساب خصم التقاعد
-      if (employmentType === 'civil') {
-        pensionDeduction = baseSalary * 0.09;
-        document.getElementById('pensionPercentage').innerText = " (9%)";
-      } else if (employmentType === 'selfEmployed') {
-        pensionDeduction = (baseSalary + housingAllowance) * 0.0975;
-        document.getElementById('pensionPercentage').innerText = " (9.75%)";
-      }
-      document.getElementById('pensionDeduction').innerText = formatNumber(pensionDeduction);
+  <!-- تنويه -->
+  <div class="mt-6 p-4 bg-gray-100 border rounded-lg text-sm text-gray-700">
+    <strong>تنويه:</strong>
+    هذه الحاسبة تقديرية وغير رسمية، ولا تمثل عرضًا وظيفيًا أو قرارًا معتمدًا،
+    وقد تختلف النتائج حسب العقد النهائي وسياسات الجهة.
+  </div>
 
-      // حساب الراتب الصافي
-      netSalary = totalSalary - pensionDeduction;
-      document.getElementById('netSalary').innerText = formatNumber(netSalary);
+</div>
 
-      calculateNewSalary();
-    }
+<script>
+  const employmentRadios = document.querySelectorAll('input[name="employmentType"]');
+  const inputs = document.querySelectorAll('input[type="number"]');
 
-    function calculateNewSalary() {
-      // حساب الراتب الأساسي بعد التحول
-      let newBaseSalary = Math.max(baseSalary, netSalary / 1.228125);
-      document.getElementById('newBaseSalary').innerText = formatNumber(newBaseSalary);
+  employmentRadios.forEach(r => r.addEventListener('change', update));
+  inputs.forEach(i => i.addEventListener('input', calculate));
 
-      // حساب البدلات الجديدة
-      let newHousingAllowance = newBaseSalary * 0.25;
-      let newTransportAllowance = newBaseSalary * 0.10;
-      let newTotalSalary = newBaseSalary + newHousingAllowance + newTransportAllowance;
-      let newPensionDeduction = (newBaseSalary + newHousingAllowance) * 0.0975;
-      let newNetSalary = newTotalSalary - newPensionDeduction;
+  function update() {
+    const type = document.querySelector('input[name="employmentType"]:checked').value;
+    document.getElementById('housingGroup').classList.toggle('hidden', type === 'civil');
+    calculate();
+  }
 
-      // تحديث النتائج
-      document.getElementById('newHousingAllowance').innerText = formatNumber(newHousingAllowance);
-      document.getElementById('newTransportAllowance').innerText = formatNumber(newTransportAllowance);
-      document.getElementById('newTotalSalary').innerText = formatNumber(newTotalSalary);
-      document.getElementById('newPensionDeduction').innerText = formatNumber(newPensionDeduction);
-      document.getElementById('newNetSalary').innerText = formatNumber(newNetSalary);
+  function calculate() {
+    const base = +baseSalary.value || 0;
+    const housing = +housingAllowance.value || 0;
+    const other = +otherAllowances.value || 0;
+    const type = document.querySelector('input[name="employmentType"]:checked').value;
 
-      // عرض نسبة خصم التقاعد الجديدة
-      document.getElementById('newPensionPercentage').innerText = " (9.75%)";
+    const total = base + housing + other;
+    const pension = type === 'civil' ? base * 0.09 : (base + housing) * 0.0975;
+    const net = total - pension;
 
-      // حساب الفروقات
-      let salaryDifference = newBaseSalary - baseSalary;
-      let netSalaryDifference = newNetSalary - netSalary;
-      document.getElementById('salaryDifference').innerText = formatNumber(salaryDifference);
-      document.getElementById('netSalaryDifference').innerText = formatNumber(netSalaryDifference);
-    }
+    displayBase.textContent = fmt(base);
+    totalSalary.textContent = fmt(total);
+    pension.textContent = fmt(pension);
+    netSalary.textContent = fmt(net);
+    pensionRate.textContent = type === 'civil' ? '(9%)' : '(9.75%)';
 
-    function formatNumber(number) {
-      return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
+    const newBase = Math.max(base, net / 1.228125);
+    const newHousing = newBase * 0.25;
+    const newTransport = newBase * 0.10;
+    const newTotal = newBase + newHousing + newTransport;
+    const newPension = (newBase + newHousing) * 0.0975;
+    const newNet = newTotal - newPension;
 
-    updateFields();
-  </script>
+    newBase.textContent = fmt(newBase);
+    newHousing.textContent = fmt(newHousing);
+    newTransport.textContent = fmt(newTransport);
+    newTotal.textContent = fmt(newTotal);
+    newPension.textContent = fmt(newPension);
+    newNet.textContent = fmt(newNet);
+
+    diffBase.textContent = fmt(newBase - base);
+    diffNet.textContent = fmt(newNet - net);
+    diffBase.style.color = newBase - base >= 0 ? '#047857' : '#b91c1c';
+    diffNet.style.color = newNet - net >= 0 ? '#047857' : '#b91c1c';
+  }
+
+  function fmt(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  update();
+</script>
 
 </body>
 </html>
