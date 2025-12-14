@@ -218,7 +218,7 @@
       <details class="group">
         <summary class="cursor-pointer list-none flex items-center justify-between gap-3">
           <div>
-            <h3 class="text-lg font-bold">منهجية الحاسبة (اقرأها لتفهم الأرقام)</h3>
+            <h3 class="text-lg font-bold">منهجية الحاسبة </h3>
             <p class="text-sm text-gray-600 mt-1">شفافية كاملة حول الافتراضات وكيف تم تطبيق شرط عدم الانخفاض.</p>
           </div>
           <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-semibold text-gray-700 group-open:hidden">عرض</span>
@@ -335,10 +335,8 @@
       otherLabel.textContent = "إجمالي البدلات";
       otherHint.textContent = "(ادخل مجموع البدلات الشهرية كما تستلمها فعليًا، بما فيها بدل السكن إن كان ضمن بدلاتك)";
       typeNote.innerHTML = `
-        <div class="font-bold mb-1">الخدمة المدنية</div>
         <div>
-          <span class="font-semibold">خصم التقاعد قبل التحول:</span> 9% من الراتب الأساسي.
-          <span class="font-semibold">بعد التحول:</span> 9.75% (هذا هو التغيير).
+          <span class="font-semibold">قم بإدخال اراتب الأساسي والبدلات بدون خصم التقاعد:</span>.
         </div>
       `;
       beforeBadge.textContent = "خصم التقاعد: 9%";
@@ -348,10 +346,8 @@
       otherLabel.textContent = "إجمالي البدلات (باستثناء بدل السكن)";
       otherHint.textContent = "(ادخل مجموع البدلات الشهرية باستثناء بدل السكن، لأن بدل السكن له خانة مستقلة )";
       typeNote.innerHTML = `
-        <div class="font-bold mb-1">التشغيل الذاتي</div>
         <div>
-          <span class="font-semibold">خصم التقاعد قبل التحول وبعده:</span> 9.75% من (الراتب الأساسي + بدل السكن).
-          <span class="font-semibold">لا يوجد تغيير في النسبة.</span>
+          <span class="font-semibold">قم بإدخال اراتب الأساسي والبدلات بدون خصم التقاعد:</span>.
         </div>
       `;
       beforeBadge.textContent = "خصم التقاعد: 9.75%";
