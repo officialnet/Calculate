@@ -333,7 +333,7 @@
       housingWrap.classList.add("hidden");
       housingInput.value = ""; // لا نستخدم بدل سكن منفصل للخدمة المدنية
       otherLabel.textContent = "إجمالي البدلات";
-      otherHint.textContent = "(ادخل مجموع البدلات الشهرية كما تستلمها فعليًا، بما فيها السكن إن كان ضمن بدلاتك)";
+      otherHint.textContent = "(ادخل مجموع البدلات الشهرية كما تستلمها فعليًا، بما فيها بدل السكن إن كان ضمن بدلاتك)";
       typeNote.innerHTML = `
         <div class="font-bold mb-1">الخدمة المدنية</div>
         <div>
@@ -346,7 +346,7 @@
       // show housing input for self
       housingWrap.classList.remove("hidden");
       otherLabel.textContent = "إجمالي البدلات (باستثناء بدل السكن)";
-      otherHint.textContent = "(ادخل مجموع البدلات الشهرية باستثناء بدل السكن، لأن بدل السكن له خانة مستقلة هنا)";
+      otherHint.textContent = "(ادخل مجموع البدلات الشهرية باستثناء بدل السكن، لأن بدل السكن له خانة مستقلة )";
       typeNote.innerHTML = `
         <div class="font-bold mb-1">التشغيل الذاتي</div>
         <div>
